@@ -1,0 +1,10 @@
+{
+  "DatabaseConfig": {
+    "Server": "localhost",
+    "Port": "5432",
+    "Database": "SistemaCrud",
+    "UserId": "postgres",
+    "Password": "31211294",
+    "Timeout": 30
+  }
+}

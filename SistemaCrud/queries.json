@@ -1,0 +1,10 @@
+{
+  "Materia": {
+    "GetAll": "SELECT materia_na AS Nombre, materia_de AS Contenido FROM materia ORDER BY materia_na",
+    "Search": "SELECT materia_na AS Nombre, materia_de AS Contenido FROM materia WHERE materia_na LIKE @SearchTerm OR materia_de LIKE @SearchTerm ORDER BY materia_na",
+    "Exists": "SELECT COUNT(1) FROM materia WHERE materia_na = @Nombre",
+    "Insert": "INSERT INTO materia (materia_na, materia_de) VALUES (@Nombre, @Descripcion)",
+    "Delete": "DELETE FROM materia WHERE materia_na = @Nombre",
+    "Update": "UPDATE materia SET materia_na = @Nombre, materia_de = @Descripcion WHERE materia_na = @NombreOriginal"
+  }
+}
