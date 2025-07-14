@@ -98,23 +98,101 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\DBcomponent.cs" />
+    <Compile Include="Presentacion\Mantenimiento\Curso\Acciones\AgregarCurso.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentacion\Mantenimiento\Curso\Acciones\AgregarCurso.Designer.cs">
+      <DependentUpon>AgregarCurso.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentacion\Mantenimiento\Curso\Acciones\EditarCurso.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentacion\Mantenimiento\Curso\Acciones\EditarCurso.Designer.cs">
+      <DependentUpon>EditarCurso.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentacion\Mantenimiento\Curso\Acciones\EliminarCurso.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentacion\Mantenimiento\Curso\Acciones\EliminarCurso.Designer.cs">
+      <DependentUpon>EliminarCurso.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentacion\Mantenimiento\Curso\cursito.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentacion\Mantenimiento\Curso\cursito.Designer.cs">
+      <DependentUpon>cursito.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentacion\Mantenimiento\Mantenimiento.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentacion\Mantenimiento\Mantenimiento.Designer.cs">
+      <DependentUpon>Mantenimiento.cs</DependentUpon>
+    </Compile>
     <Compile Include="Presentacion\Mantenimiento\Materia\Acciones\EditarMateria.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Presentacion\Mantenimiento\Materia\Acciones\EditarMateria.Designer.cs">
       <DependentUpon>EditarMateria.cs</DependentUpon>
     </Compile>
-    <Compile Include="Presentacion\Mantenimiento\Materia\Acciones\EliminarMateria.cs">
+    <Compile Include="Presentacion\Mantenimiento\Materia\Acciones\EliminarMate.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Presentacion\Mantenimiento\Materia\Acciones\EliminarMateria.Designer.cs">
-      <DependentUpon>EliminarMateria.cs</DependentUpon>
+    <Compile Include="Presentacion\Mantenimiento\Materia\Acciones\EliminarMate.Designer.cs">
+      <DependentUpon>EliminarMate.cs</DependentUpon>
     </Compile>
     <Compile Include="Presentacion\Mantenimiento\Materia\materia.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Presentacion\Mantenimiento\Materia\materia.Designer.cs">
       <DependentUpon>materia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentacion\Mantenimiento\Persona\Acciones\AgregarPersona.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentacion\Mantenimiento\Persona\Acciones\AgregarPersona.Designer.cs">
+      <DependentUpon>AgregarPersona.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentacion\Mantenimiento\Persona\Acciones\EditarPersona.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentacion\Mantenimiento\Persona\Acciones\EditarPersona.Designer.cs">
+      <DependentUpon>EditarPersona.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentacion\Mantenimiento\Persona\Acciones\EliminarPersona.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentacion\Mantenimiento\Persona\Acciones\EliminarPersona.Designer.cs">
+      <DependentUpon>EliminarPersona.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentacion\Mantenimiento\Persona\Personas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentacion\Mantenimiento\Persona\Personas.Designer.cs">
+      <DependentUpon>Personas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentacion\Mantenimiento\Seccion\Acciones\AgregarSeccion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentacion\Mantenimiento\Seccion\Acciones\AgregarSeccion.Designer.cs">
+      <DependentUpon>AgregarSeccion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentacion\Mantenimiento\Seccion\Acciones\EditarSeccion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentacion\Mantenimiento\Seccion\Acciones\EditarSeccion.Designer.cs">
+      <DependentUpon>EditarSeccion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentacion\Mantenimiento\Seccion\Acciones\EliminarSeccion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentacion\Mantenimiento\Seccion\Acciones\EliminarSeccion.Designer.cs">
+      <DependentUpon>EliminarSeccion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentacion\Mantenimiento\Seccion\seccion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentacion\Mantenimiento\Seccion\seccion.Designer.cs">
+      <DependentUpon>seccion.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Entidad\E_Curso.cs" />
@@ -139,17 +217,53 @@
     <EmbeddedResource Include="Presentacion\main.resx">
       <DependentUpon>main.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Presentacion\Mantenimiento\Curso\Acciones\AgregarCurso.resx">
+      <DependentUpon>AgregarCurso.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentacion\Mantenimiento\Curso\Acciones\EditarCurso.resx">
+      <DependentUpon>EditarCurso.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentacion\Mantenimiento\Curso\Acciones\EliminarCurso.resx">
+      <DependentUpon>EliminarCurso.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentacion\Mantenimiento\Curso\cursito.resx">
+      <DependentUpon>cursito.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentacion\Mantenimiento\Mantenimiento.resx">
+      <DependentUpon>Mantenimiento.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Presentacion\Mantenimiento\Materia\Acciones\AgregarMateria.resx">
       <DependentUpon>AgregarMateria.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Presentacion\Mantenimiento\Materia\Acciones\EditarMateria.resx">
       <DependentUpon>EditarMateria.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Presentacion\Mantenimiento\Materia\Acciones\EliminarMateria.resx">
-      <DependentUpon>EliminarMateria.cs</DependentUpon>
+    <EmbeddedResource Include="Presentacion\Mantenimiento\Materia\Acciones\EliminarMate.resx">
+      <DependentUpon>EliminarMate.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Presentacion\Mantenimiento\Materia\Materia.resx">
       <DependentUpon>materia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentacion\Mantenimiento\Persona\Acciones\AgregarPersona.resx">
+      <DependentUpon>AgregarPersona.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentacion\Mantenimiento\Persona\Acciones\EditarPersona.resx">
+      <DependentUpon>EditarPersona.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentacion\Mantenimiento\Persona\Acciones\EliminarPersona.resx">
+      <DependentUpon>EliminarPersona.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentacion\Mantenimiento\Persona\Personas.resx">
+      <DependentUpon>Personas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentacion\Mantenimiento\Seccion\Acciones\AgregarSeccion.resx">
+      <DependentUpon>AgregarSeccion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentacion\Mantenimiento\Seccion\Acciones\EliminarSeccion.resx">
+      <DependentUpon>EliminarSeccion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentacion\Mantenimiento\Seccion\seccion.resx">
+      <DependentUpon>seccion.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -180,11 +294,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Presentacion\Mantenimiento\Curso\" />
-    <Folder Include="Presentacion\Mantenimiento\Persona\" />
-    <Folder Include="Presentacion\Mantenimiento\Seccion\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Extensions.Logging.Abstractions.6.0.0\build\Microsoft.Extensions.Logging.Abstractions.targets" Condition="Exists('..\packages\Microsoft.Extensions.Logging.Abstractions.6.0.0\build\Microsoft.Extensions.Logging.Abstractions.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

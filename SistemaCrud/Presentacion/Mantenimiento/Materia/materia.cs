@@ -163,49 +163,16 @@ namespace SistemaCrud.Presentacion.Mantenimiento.Materia.Acciones
 
         private void buttonEliminar_Click(object sender, EventArgs e)
         {
-            if (dataGridViewmateria.SelectedRows.Count == 0)
-            {
-                MessageBox.Show("Seleccione una materia para eliminar", "Advertencia",
-                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            var nombreMateria = dataGridViewmateria.SelectedRows[0].Cells["Materia"].Value.ToString();
-            var confirmacion = MessageBox.Show($"¿Está seguro de eliminar la materia '{nombreMateria}'?",
-                                             "Confirmar eliminación",
-                                             MessageBoxButtons.YesNo,
-                                             MessageBoxIcon.Question);
-
-            if (confirmacion == DialogResult.Yes)
-            {
-                try
-                {
-                    int result = _db.Execute("Materia", "Delete", new { Nombre = nombreMateria });
-                    if (result > 0)
-                    {
-                        MessageBox.Show("Materia eliminada correctamente", "Éxito",
-                                        MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        LoadMaterias();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Error al eliminar materia: {ex.Message}", "Error",
-                                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
+            Elimina form = new Elimina();
+            form.Show();
         }
 
         private void buttonAgregar_Click(object sender, EventArgs e)
         {
-            var formAgregar = new AgregarMateria();
-            if (formAgregar.ShowDialog() == DialogResult.OK)
-            {
-                LoadMaterias(); // Refrescar datos después de agregar
-            }
+            AgregarMateria form = new AgregarMateria();
+            form.Show();
         }
 
-        // Método Load corregido (opcional, puede eliminarse si no se usa)
         private void materia_Load(object sender, EventArgs e)
         {
             // Puede usarse para inicializaciones adicionales

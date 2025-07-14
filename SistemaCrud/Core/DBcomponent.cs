@@ -2,6 +2,7 @@ using Dapper;
 using Npgsql;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Text.Json;
 
@@ -31,9 +32,9 @@ namespace SistemaCRUD.Core
                 if (!File.Exists(configPath))
                 {
                     var errorMessage = $"No se pudo encontrar config.json en:\n" +
-                                       $"1. {AppDomain.CurrentDomain.BaseDirectory}\n" +
-                                       $"2. {Directory.GetParent(Directory.GetCurrentDirectory())?.Parent?.Parent?.FullName}\n\n" +
-                                       $"Solución: Asegúrate de que el archivo config.json exista y esté configurado para copiarse al directorio de salida (Propiedades > Copiar al directorio de salida).";
+                                     $"1. {AppDomain.CurrentDomain.BaseDirectory}\n" +
+                                     $"2. {Directory.GetParent(Directory.GetCurrentDirectory())?.Parent?.Parent?.FullName}\n\n" +
+                                     $"Solución: Asegúrate de que el archivo config.json exista y esté configurado para copiarse al directorio de salida (Propiedades > Copiar al directorio de salida).";
                     throw new FileNotFoundException(errorMessage);
                 }
 
@@ -43,10 +44,10 @@ namespace SistemaCRUD.Core
                 var dbConfig = config["DatabaseConfig"];
 
                 _connectionString = $"Server={dbConfig.GetProperty("Server").GetString()};" +
-                                   $"Port={dbConfig.GetProperty("Port").GetString()};" +
-                                   $"Database={dbConfig.GetProperty("Database").GetString()};" +
-                                   $"User Id={dbConfig.GetProperty("UserId").GetString()};" +
-                                   $"Password={dbConfig.GetProperty("Password").GetString()};";
+                                 $"Port={dbConfig.GetProperty("Port").GetString()};" +
+                                 $"Database={dbConfig.GetProperty("Database").GetString()};" +
+                                 $"User Id={dbConfig.GetProperty("UserId").GetString()};" +
+                                 $"Password={dbConfig.GetProperty("Password").GetString()};";
 
                 // Mismo proceso para queries.json
                 var queriesPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "queries.json");
@@ -61,9 +62,9 @@ namespace SistemaCRUD.Core
                 if (!File.Exists(queriesPath))
                 {
                     var errorMessage = $"No se pudo encontrar queries.json en:\n" +
-                                       $"1. {AppDomain.CurrentDomain.BaseDirectory}\n" +
-                                       $"2. {Directory.GetParent(Directory.GetCurrentDirectory())?.Parent?.Parent?.FullName}\n\n" +
-                                       $"Solución: Asegúrate de que el archivo queries.json exista y esté configurado para copiarse al directorio de salida (Propiedades > Copiar al directorio de salida).";
+                                     $"1. {AppDomain.CurrentDomain.BaseDirectory}\n" +
+                                     $"2. {Directory.GetParent(Directory.GetCurrentDirectory())?.Parent?.Parent?.FullName}\n\n" +
+                                     $"Solución: Asegúrate de que el archivo queries.json exista y esté configurado para copiarse al directorio de salida (Propiedades > Copiar al directorio de salida).";
                     throw new FileNotFoundException(errorMessage);
                 }
 
@@ -108,6 +109,34 @@ namespace SistemaCRUD.Core
                 catch (Exception ex)
                 {
                     throw new Exception($"Error al ejecutar consulta: {entity}/{operation}", ex);
+                }
+            }
+        }
+
+        public T QueryFirstOrDefault<T>(string entity, string operation, object parameters = null)
+        {
+            using (var conn = new NpgsqlConnection(_connectionString))
+            {
+                try
+                {
+                    conn.Open();
+                    if (_queries.TryGetValue(entity, out var entityQueries))
+                    {
+                        if (entityQueries.TryGetValue(operation, out var query))
+                        {
+                            return conn.QueryFirstOrDefault<T>(query, parameters);
+                        }
+                        throw new KeyNotFoundException($"Operación '{operation}' no encontrada para la entidad '{entity}'");
+                    }
+                    throw new KeyNotFoundException($"Entidad '{entity}' no encontrada en queries");
+                }
+                catch (NpgsqlException ex)
+                {
+                    throw new Exception($"Error de PostgreSQL al ejecutar QueryFirstOrDefault: {entity}/{operation}", ex);
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception($"Error al ejecutar QueryFirstOrDefault: {entity}/{operation}", ex);
                 }
             }
         }

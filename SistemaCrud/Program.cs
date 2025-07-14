@@ -13,7 +13,7 @@ namespace ProyectoCRUD
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new SistemaCrud.Presentacion.Mantenimiento.Materia.Acciones.materia());
+            Application.Run(new SistemaCrud.Presentacion.Mantenimiento.Mantenimiento());
         }
     }
 }
