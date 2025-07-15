@@ -34,6 +34,9 @@ namespace SistemaCrud.Presentacion.Mantenimiento.Materia.Acciones
             dataGridViewmateria.ColumnHeadersDefaultCellStyle.BackColor = Color.LightGray;
             dataGridViewmateria.AlternatingRowsDefaultCellStyle.BackColor = Color.WhiteSmoke;
 
+            // Limpiar columnas existentes
+            dataGridViewmateria.Columns.Clear();
+
             // Columnas del DataGridView
             var btnEditar = new DataGridViewButtonColumn
             {
@@ -53,8 +56,8 @@ namespace SistemaCrud.Presentacion.Mantenimiento.Materia.Acciones
             {
                 Name = "Materia",
                 HeaderText = "Materia",
-                DataPropertyName = "Nombre",
-                Width = 200,
+                DataPropertyName = "materia_na",
+                Width = 350,
                 DefaultCellStyle = new DataGridViewCellStyle
                 {
                     Padding = new Padding(5, 0, 0, 0)
@@ -65,8 +68,8 @@ namespace SistemaCrud.Presentacion.Mantenimiento.Materia.Acciones
             {
                 Name = "Contenido",
                 HeaderText = "Contenido",
-                DataPropertyName = "Contenido",
-                Width = 300,
+                DataPropertyName = "materia_de",
+                Width = 600,
                 DefaultCellStyle = new DataGridViewCellStyle
                 {
                     Padding = new Padding(5, 0, 0, 0)
@@ -96,10 +99,15 @@ namespace SistemaCrud.Presentacion.Mantenimiento.Materia.Acciones
                 }
                 else
                 {
-                    materias = _db.Query<dynamic>("Materia", "Search", new { SearchTerm = $"%{searchTerm}%" });
+                    // Usar la consulta Search y mapear los resultados a materia_na y materia_de, cubriendo ambos casos
+                    var resultados = _db.Query<dynamic>("Materia", "Search", new { SearchTerm = $"%{searchTerm}%" });
+                    materias = resultados.Select(m => new {
+                        materia_na = m.materia_na ?? m.Nombre ?? "",
+                        materia_de = m.materia_de ?? m.Contenido ?? ""
+                    });
                 }
 
-                dataGridViewmateria.DataSource = ToDataTable(materias);
+                dataGridViewmateria.DataSource = materias.ToList();
                 dataGridViewmateria.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
             }
             catch (Exception ex)
@@ -140,20 +148,21 @@ namespace SistemaCrud.Presentacion.Mantenimiento.Materia.Acciones
 
         private void dataGridViewmateria_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            //if (e.RowIndex < 0 || e.ColumnIndex < 0) return;
+            if (e.RowIndex < 0 || e.ColumnIndex < 0) return;
 
-            //if (dataGridViewmateria.Columns[e.ColumnIndex].Name == "Editar")
-            //{
-            //    var nombreMateria = dataGridViewmateria.Rows[e.RowIndex].Cells["Materia"].Value.ToString();
-            //    var contenido = dataGridViewmateria.Rows[e.RowIndex].Cells["Contenido"].Value.ToString();
+            if (dataGridViewmateria.Columns[e.ColumnIndex].Name == "Editar")
+            {
+                var nombreMateria = dataGridViewmateria.Rows[e.RowIndex].Cells["Materia"].Value?.ToString();
+                var contenido = dataGridViewmateria.Rows[e.RowIndex].Cells["Contenido"].Value?.ToString();
 
-            //    // Implementar lógica de edición aquí
-            //    var formEditar = new EditarMateria(nombreMateria, contenido);
-            //    if (formEditar.ShowDialog() == DialogResult.OK)
-            //    {
-            //        LoadMaterias(); // Refrescar datos después de editar
-            //    }
-            //}
+                // Abrir pantalla de edición de materia
+                var formEditar = new Acciones.EditarMateria();
+                formEditar.Tag = new { materia_na = nombreMateria, materia_de = contenido };
+                if (formEditar.ShowDialog() == DialogResult.OK)
+                {
+                    LoadMaterias(); // Refrescar datos después de editar
+                }
+            }
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -164,13 +173,19 @@ namespace SistemaCrud.Presentacion.Mantenimiento.Materia.Acciones
         private void buttonEliminar_Click(object sender, EventArgs e)
         {
             Elimina form = new Elimina();
-            form.Show();
+            if (form.ShowDialog() == DialogResult.OK)
+            {
+                LoadMaterias();
+            }
         }
 
         private void buttonAgregar_Click(object sender, EventArgs e)
         {
             AgregarMateria form = new AgregarMateria();
-            form.Show();
+            if (form.ShowDialog() == DialogResult.OK)
+            {
+                LoadMaterias();
+            }
         }
 
         private void materia_Load(object sender, EventArgs e)

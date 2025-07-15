@@ -259,6 +259,9 @@
     <EmbeddedResource Include="Presentacion\Mantenimiento\Seccion\Acciones\AgregarSeccion.resx">
       <DependentUpon>AgregarSeccion.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Presentacion\Mantenimiento\Seccion\Acciones\EditarSeccion.resx">
+      <DependentUpon>EditarSeccion.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Presentacion\Mantenimiento\Seccion\Acciones\EliminarSeccion.resx">
       <DependentUpon>EliminarSeccion.cs</DependentUpon>
     </EmbeddedResource>

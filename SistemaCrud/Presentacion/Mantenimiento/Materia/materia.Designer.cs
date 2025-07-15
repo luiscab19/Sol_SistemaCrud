@@ -44,7 +44,7 @@
             this.dataGridViewmateria.Name = "dataGridViewmateria";
             this.dataGridViewmateria.RowHeadersWidth = 51;
             this.dataGridViewmateria.RowTemplate.Height = 24;
-            this.dataGridViewmateria.Size = new System.Drawing.Size(1061, 306);
+            this.dataGridViewmateria.Size = new System.Drawing.Size(1060, 305);
             this.dataGridViewmateria.TabIndex = 14;
             this.dataGridViewmateria.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewmateria_CellContentClick);
             // 
@@ -62,6 +62,7 @@
             // textBox1
             // 
             this.textBox1.Location = new System.Drawing.Point(115, 151);
+            this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(1002, 22);
             this.textBox1.TabIndex = 12;

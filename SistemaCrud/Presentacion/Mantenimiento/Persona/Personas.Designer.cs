@@ -44,7 +44,7 @@
             this.dataGridViewPersona.Name = "dataGridViewPersona";
             this.dataGridViewPersona.RowHeadersWidth = 51;
             this.dataGridViewPersona.RowTemplate.Height = 24;
-            this.dataGridViewPersona.Size = new System.Drawing.Size(1061, 306);
+            this.dataGridViewPersona.Size = new System.Drawing.Size(1060, 305);
             this.dataGridViewPersona.TabIndex = 18;
             this.dataGridViewPersona.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewPersona_CellContentClick);
             // 
@@ -79,7 +79,7 @@
             this.buttonAgregarPersona.UseVisualStyleBackColor = false;
             this.buttonAgregarPersona.Click += new System.EventHandler(this.buttonAgregarPersona_Click);
             // 
-            // Persona
+            // Personas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -88,7 +88,7 @@
             this.Controls.Add(this.buttonEliminarPersona);
             this.Controls.Add(this.textBoxPersona);
             this.Controls.Add(this.buttonAgregarPersona);
-            this.Name = "Persona";
+            this.Name = "Personas";
             this.Text = "Persona";
             this.Load += new System.EventHandler(this.Persona_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPersona)).EndInit();

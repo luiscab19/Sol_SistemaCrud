@@ -1,7 +1,7 @@
 {
   "Materia": {
     "GetAll": "SELECT materia_na, materia_de FROM materia ORDER BY materia_na",
-    "Search": "SELECT materia_na AS Nombre, materia_de AS Contenido FROM materia WHERE materia_na LIKE @SearchTerm OR materia_de LIKE @SearchTerm ORDER BY materia_na",
+    "Search": "SELECT materia_na, materia_de FROM materia WHERE materia_na LIKE @SearchTerm OR materia_de LIKE @SearchTerm ORDER BY materia_na",
     "Exists": "SELECT COUNT(1) FROM materia WHERE materia_na = @Nombre",
     "Insert": "INSERT INTO materia (materia_na, materia_de) VALUES (@Nombre, @Descripcion)",
     "Delete": "DELETE FROM materia WHERE materia_na = @Nombre",
@@ -21,10 +21,19 @@
     "Search": "SELECT c.curso_id AS Id_curso, c.seccion_id AS Seccion_id, s.seccion_de, c.materia_na, m.materia_de, c.persona_id AS Persona_id, p.persona_no AS Profesor_nombre FROM curso c INNER JOIN seccion s ON c.seccion_id = s.seccion_id INNER JOIN materia m ON c.materia_na = m.materia_na INNER JOIN persona p ON c.persona_id = p.persona_id WHERE c.curso_id::TEXT LIKE @SearchTerm OR s.seccion_de LIKE @SearchTerm OR m.materia_na LIKE @SearchTerm OR m.materia_de LIKE @SearchTerm OR p.persona_no LIKE @SearchTerm ORDER BY c.curso_id",
     "Exists": "SELECT COUNT(1) FROM curso WHERE seccion_id = @SeccionId AND materia_na = @MateriaNombre"
   },
+  "Nota": {
+    "GetAllByCurso": "SELECT i.inscripcion_id AS Codigo, m.materia_na AS Curso, s.seccion_de AS Seccion, p.persona_no AS Alumno, p.persona_id AS PersonaId, c.calificacion_no AS Nota FROM inscripcion i INNER JOIN curso cu ON i.curso_id = cu.curso_id INNER JOIN materia m ON cu.materia_na = m.materia_na INNER JOIN seccion s ON cu.seccion_id = s.seccion_id INNER JOIN persona p ON i.persona_id = p.persona_id LEFT JOIN calificacion c ON c.inscripcion_id = i.inscripcion_id WHERE cu.curso_id = @CursoId ORDER BY p.persona_no",
+    "GetAllByCursoAndCedula": "SELECT i.inscripcion_id AS Codigo, m.materia_na AS Curso, s.seccion_de AS Seccion, p.persona_no AS Alumno, p.persona_id AS PersonaId, c.calificacion_no AS Nota FROM inscripcion i INNER JOIN curso cu ON i.curso_id = cu.curso_id INNER JOIN materia m ON cu.materia_na = m.materia_na INNER JOIN seccion s ON cu.seccion_id = s.seccion_id INNER JOIN persona p ON i.persona_id = p.persona_id LEFT JOIN calificacion c ON c.inscripcion_id = i.inscripcion_id WHERE cu.curso_id = @CursoId AND p.persona_no ILIKE @Nombre ORDER BY p.persona_no",
+    "Insert": "INSERT INTO calificacion (calificacion_no, inscripcion_id) VALUES (@Nota, @InscripcionId)",
+    "Update": "UPDATE calificacion SET calificacion_no = @Nota WHERE inscripcion_id = @InscripcionId",
+    "Delete": "DELETE FROM calificacion WHERE inscripcion_id = @InscripcionId"
+  },
   "Seccion": {
     "Insert": "INSERT INTO seccion (seccion_id, seccion_de) VALUES (@Id, @Nombre)",
     "Exists": "SELECT COUNT(1) FROM seccion WHERE seccion_id = @Id OR seccion_de = @Nombre",
-    "GetAll": "SELECT seccion_id, seccion_de FROM seccion ORDER BY seccion_id"
+    "GetAll": "SELECT seccion_id, seccion_de FROM seccion ORDER BY seccion_id",
+    "Delete": "DELETE FROM seccion WHERE seccion_id = @Id",
+    "Update": "UPDATE seccion SET seccion_de = @Nombre WHERE seccion_id = @Id"
   },
   "Persona": {
     "Insert": "INSERT INTO persona (persona_no, tipo_persona_id) VALUES (@Nombre, @TipoPersonaId) RETURNING persona_id",
@@ -33,7 +42,7 @@
     "SelectProfesores": "SELECT persona_id AS Persona_id, persona_no AS Persona_no FROM persona WHERE tipo_persona_id = 2 ORDER BY persona_no",
     "ExistsById": "SELECT COUNT(1) FROM persona WHERE persona_id = @Id",
     "GetById": "SELECT persona_id AS Persona_id, persona_no AS Persona_no FROM persona WHERE persona_id = @Id",
-    "Update": "UPDATE persona SET persona_no = @Nombre, tipo_persona_id = @TipoPersonaId WHERE persona_id = @Id",
+    "Update": "UPDATE persona SET persona_id = @NuevoId, persona_no = @Nombre, tipo_persona_id = @TipoPersonaId WHERE persona_id = @IdOriginal",
     "Delete": "DELETE FROM persona WHERE persona_id = @Id",
     "CheckDependencies": "SELECT (SELECT COUNT(1) FROM curso WHERE persona_id = @Id) + (SELECT COUNT(1) FROM inscripcion WHERE persona_id = @Id) AS total_dependencias"
   },

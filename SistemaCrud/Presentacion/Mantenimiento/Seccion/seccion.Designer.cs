@@ -43,7 +43,7 @@
             this.dataGridViewmateria.Name = "dataGridViewmateria";
             this.dataGridViewmateria.RowHeadersWidth = 51;
             this.dataGridViewmateria.RowTemplate.Height = 24;
-            this.dataGridViewmateria.Size = new System.Drawing.Size(1061, 306);
+            this.dataGridViewmateria.Size = new System.Drawing.Size(1060, 305);
             this.dataGridViewmateria.TabIndex = 17;
             this.dataGridViewmateria.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewmateria_CellContentClick);
             // 

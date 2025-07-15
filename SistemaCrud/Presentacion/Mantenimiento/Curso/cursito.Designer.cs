@@ -30,7 +30,6 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(cursito));
             this.dataGridViewmateria = new System.Windows.Forms.DataGridView();
-            this.Editar = new System.Windows.Forms.DataGridViewImageColumn();
             this.buttonEliminar = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.buttonAgregar = new System.Windows.Forms.Button();
@@ -40,22 +39,13 @@
             // dataGridViewmateria
             // 
             this.dataGridViewmateria.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewmateria.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Editar});
-            this.dataGridViewmateria.Location = new System.Drawing.Point(145, 270);
+            this.dataGridViewmateria.Location = new System.Drawing.Point(176, 260);
             this.dataGridViewmateria.Name = "dataGridViewmateria";
             this.dataGridViewmateria.RowHeadersWidth = 51;
             this.dataGridViewmateria.RowTemplate.Height = 24;
-            this.dataGridViewmateria.Size = new System.Drawing.Size(1061, 306);
+            this.dataGridViewmateria.Size = new System.Drawing.Size(1060, 305);
             this.dataGridViewmateria.TabIndex = 17;
             this.dataGridViewmateria.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewmateria_CellContentClick);
-            // 
-            // Editar
-            // 
-            this.Editar.HeaderText = "Editar";
-            this.Editar.MinimumWidth = 6;
-            this.Editar.Name = "Editar";
-            this.Editar.Width = 125;
             // 
             // buttonEliminar
             // 
@@ -108,7 +98,6 @@
         #endregion
 
         private System.Windows.Forms.DataGridView dataGridViewmateria;
-        private System.Windows.Forms.DataGridViewImageColumn Editar;
         private System.Windows.Forms.Button buttonEliminar;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button buttonAgregar;
