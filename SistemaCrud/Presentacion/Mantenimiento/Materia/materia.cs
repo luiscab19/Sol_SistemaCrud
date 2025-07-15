@@ -109,6 +109,9 @@ namespace SistemaCrud.Presentacion.Mantenimiento.Materia.Acciones
 
                 dataGridViewmateria.DataSource = materias.ToList();
                 dataGridViewmateria.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
+                dataGridViewmateria.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                dataGridViewmateria.Columns["Editar"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+                dataGridViewmateria.Columns["Editar"].Width = 60;
             }
             catch (Exception ex)
             {

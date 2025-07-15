@@ -21,6 +21,8 @@ namespace SistemaCrud.Presentacion.Mantenimiento.Persona.Acciones
             // Configurar enlace de datos
             textBoxAgregarNombre.DataBindings.Add("Text", _persona, "Persona_no",
                 true, DataSourceUpdateMode.OnPropertyChanged);
+            textBoxCedula.DataBindings.Add("Text", _persona, "Persona_id",
+                true, DataSourceUpdateMode.OnPropertyChanged);
 
             // Cargar tipos de persona fijos
             CargarTiposPersona();
@@ -61,29 +63,49 @@ namespace SistemaCrud.Presentacion.Mantenimiento.Persona.Acciones
                     textBoxAgregarNombre.Focus();
                     return;
                 }
-
+                if (string.IsNullOrWhiteSpace(_persona.Persona_id))
+                {
+                    MessageBox.Show("Debe ingresar una cédula", "Error",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    textBoxCedula.Focus();
+                    return;
+                }
+                // Validar que la cédula sea numérica
+                if (!long.TryParse(_persona.Persona_id.Trim(), out _))
+                {
+                    MessageBox.Show("La cédula debe ser un valor numérico", "Error",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    textBoxCedula.Focus();
+                    return;
+                }
                 // Obtener el tipo de persona seleccionado
                 _persona.Tipo_persona_id = (int)comboBoxTipoPersona.SelectedValue;
-
+                // Verificar si ya existe una persona con esta cédula
+                bool existeCedula = _db.ExecuteScalar<int>("Persona", "ExistsById",
+                                        new { Id = _persona.Persona_id.Trim() }) > 0;
+                if (existeCedula)
+                {
+                    MessageBox.Show("Ya existe una persona con esta cédula", "Error",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
                 // Verificar si ya existe una persona con este nombre
                 bool existeNombre = _db.ExecuteScalar<int>("Persona", "ExistsByName",
                                         new { Nombre = _persona.Persona_no.Trim() }) > 0;
-
                 if (existeNombre)
                 {
                     MessageBox.Show("Ya existe una persona con este nombre", "Error",
                                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-
-                // Insertar en la base de datos
-                var nuevoId = _db.ExecuteScalar<int>("Persona", "Insert", new
+                // Insertar en la base de datos usando la cédula como ID
+                _db.Execute("Persona", "Insert", new
                 {
+                    Id = _persona.Persona_id.Trim(),
                     Nombre = _persona.Persona_no.Trim(),
                     TipoPersonaId = _persona.Tipo_persona_id
                 });
-
-                MessageBox.Show($"Persona registrada exitosamente con ID: {nuevoId}", "Éxito",
+                MessageBox.Show($"Persona registrada exitosamente con cédula: {_persona.Persona_id}", "Éxito",
                                 MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.DialogResult = DialogResult.OK;
                 this.Close();
