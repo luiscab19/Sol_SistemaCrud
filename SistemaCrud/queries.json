@@ -18,7 +18,7 @@
     "ExistsByComponents": "SELECT COUNT(1) FROM curso WHERE seccion_id = @SeccionId AND materia_na = @MateriaNombre AND persona_id = @ProfesorId",
     "Update": "UPDATE curso SET seccion_id = @SeccionId, materia_na = @MateriaNombre, persona_id = @ProfesorId WHERE curso_id = @Id",
     "CheckDependencies": "SELECT COUNT(1) FROM inscripcion WHERE curso_id = @Id",
-    "Search": "SELECT c.curso_id AS Id_curso, c.seccion_id AS Seccion_id, s.seccion_de, c.materia_na, m.materia_de, c.persona_id AS Persona_id, p.persona_no AS Profesor_nombre FROM curso c INNER JOIN seccion s ON c.seccion_id = s.seccion_id INNER JOIN materia m ON c.materia_na = m.materia_na INNER JOIN persona p ON c.persona_id = p.persona_id WHERE c.curso_id::TEXT LIKE @SearchTerm OR s.seccion_de LIKE @SearchTerm OR m.materia_na LIKE @SearchTerm OR m.materia_de LIKE @SearchTerm OR p.persona_no LIKE @SearchTerm ORDER BY c.curso_id",
+    "Search": "SELECT c.curso_id AS Id_curso, c.seccion_id AS Seccion_id, s.seccion_de, c.materia_na, m.materia_de, c.persona_id AS Persona_id, p.persona_no AS Profesor_nombre FROM curso c INNER JOIN seccion s ON c.seccion_id = s.seccion_id INNER JOIN materia m ON c.materia_na = m.materia_na INNER JOIN persona p ON c.persona_id = p.persona_id WHERE CAST(c.curso_id AS TEXT) LIKE @SearchTerm OR LOWER(s.seccion_de) LIKE LOWER(@SearchTerm) OR LOWER(m.materia_na) LIKE LOWER(@SearchTerm) OR LOWER(m.materia_de) LIKE LOWER(@SearchTerm) OR LOWER(p.persona_no) LIKE LOWER(@SearchTerm) ORDER BY c.curso_id",
     "Exists": "SELECT COUNT(1) FROM curso WHERE seccion_id = @SeccionId AND materia_na = @MateriaNombre"
   },
   "Nota": {
@@ -32,6 +32,7 @@
     "Insert": "INSERT INTO seccion (seccion_id, seccion_de) VALUES (@Id, @Nombre)",
     "Exists": "SELECT COUNT(1) FROM seccion WHERE seccion_id = @Id OR seccion_de = @Nombre",
     "GetAll": "SELECT seccion_id, seccion_de FROM seccion ORDER BY seccion_id",
+    "Search": "SELECT seccion_id, seccion_de FROM seccion WHERE CAST(seccion_id AS TEXT) LIKE @SearchTerm OR seccion_de LIKE @SearchTerm ORDER BY seccion_id",
     "Delete": "DELETE FROM seccion WHERE seccion_id = @Id",
     "Update": "UPDATE seccion SET seccion_de = @Nombre WHERE seccion_id = @Id"
   },
@@ -39,6 +40,7 @@
     "Insert": "INSERT INTO persona (persona_no, tipo_persona_id) VALUES (@Nombre, @TipoPersonaId) RETURNING persona_id",
     "ExistsByName": "SELECT COUNT(1) FROM persona WHERE persona_no = @Nombre",
     "SelectAll": "SELECT p.persona_id, p.persona_no, tp.tipo_persona_de FROM persona p INNER JOIN tipo_persona tp ON p.tipo_persona_id = tp.tipo_persona_id ORDER BY p.persona_no",
+    "Search": "SELECT p.persona_id, p.persona_no, tp.tipo_persona_de FROM persona p INNER JOIN tipo_persona tp ON p.tipo_persona_id = tp.tipo_persona_id WHERE LOWER(p.persona_no) LIKE LOWER(@SearchTerm) OR CAST(p.persona_id AS TEXT) LIKE @SearchTerm OR LOWER(tp.tipo_persona_de) LIKE LOWER(@SearchTerm) ORDER BY p.persona_no",
     "SelectProfesores": "SELECT persona_id AS Persona_id, persona_no AS Persona_no FROM persona WHERE tipo_persona_id = 2 ORDER BY persona_no",
     "ExistsById": "SELECT COUNT(1) FROM persona WHERE persona_id = @Id",
     "GetById": "SELECT persona_id AS Persona_id, persona_no AS Persona_no FROM persona WHERE persona_id = @Id",

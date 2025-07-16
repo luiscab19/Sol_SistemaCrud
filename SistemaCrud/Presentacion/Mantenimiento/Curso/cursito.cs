@@ -19,6 +19,7 @@ namespace SistemaCrud.Presentacion.Mantenimiento.Curso
         public cursito()
         {
             InitializeComponent();
+            textBox1.TextChanged += textBox1_TextChanged;
         }
 
         private void Curso_Load(object sender, EventArgs e)
@@ -90,12 +91,21 @@ namespace SistemaCrud.Presentacion.Mantenimiento.Curso
             dataGridViewmateria.Columns["Editar"].Width = 60;
         }
 
-        private void LoadCursos()
+        private void LoadCursos(string searchTerm = null)
         {
             try
             {
                 dataGridViewmateria.DataSource = null;
-                var cursos = _db.Query<dynamic>("Curso", "GetAllComplete");
+                IEnumerable<dynamic> cursos;
+                if (string.IsNullOrWhiteSpace(searchTerm))
+                {
+                    cursos = _db.Query<dynamic>("Curso", "GetAllComplete");
+                }
+                else
+                {
+                    var resultados = _db.Query<dynamic>("Curso", "Search", new { SearchTerm = $"%{searchTerm}%" });
+                    cursos = resultados;
+                }
                 dataGridViewmateria.DataSource = cursos.ToList();
                 dataGridViewmateria.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
             }
@@ -133,6 +143,11 @@ namespace SistemaCrud.Presentacion.Mantenimiento.Curso
                     LoadCursos();
                 }
             }
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            LoadCursos(textBox1.Text.Trim());
         }
     }
 }

@@ -41,7 +41,7 @@ namespace SistemaCrud.Presentacion.Mantenimiento.Persona
 
         private void textBoxPersona_TextChanged(object sender, EventArgs e)
         {
-
+            LoadPersonas(textBoxPersona.Text.Trim());
         }
 
         private void dataGridViewPersona_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -123,12 +123,25 @@ namespace SistemaCrud.Presentacion.Mantenimiento.Persona
             dataGridViewPersona.Columns["Editar"].Width = 60;
         }
 
-        private void LoadPersonas()
+        private void LoadPersonas(string searchTerm = null)
         {
             try
             {
                 dataGridViewPersona.DataSource = null;
-                var personas = _db.Query<dynamic>("Persona", "SelectAll");
+                IEnumerable<dynamic> personas;
+                if (string.IsNullOrWhiteSpace(searchTerm))
+                {
+                    personas = _db.Query<dynamic>("Persona", "SelectAll");
+                }
+                else
+                {
+                    var resultados = _db.Query<dynamic>("Persona", "Search", new { SearchTerm = $"%{searchTerm}%" });
+                    personas = resultados.Select(p => new {
+                        persona_id = p.persona_id ?? p.Cedula ?? "",
+                        persona_no = p.persona_no ?? p.Nombre ?? "",
+                        tipo_persona_de = p.tipo_persona_de ?? p.TipoPersona ?? ""
+                    });
+                }
                 dataGridViewPersona.DataSource = personas.ToList();
                 dataGridViewPersona.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
             }

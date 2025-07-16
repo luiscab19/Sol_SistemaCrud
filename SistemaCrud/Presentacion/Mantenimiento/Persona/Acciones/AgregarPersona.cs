@@ -63,7 +63,7 @@ namespace SistemaCrud.Presentacion.Mantenimiento.Persona.Acciones
                     textBoxAgregarNombre.Focus();
                     return;
                 }
-                if (string.IsNullOrWhiteSpace(_persona.Persona_id))
+                if (_persona.Persona_id == 0)
                 {
                     MessageBox.Show("Debe ingresar una cédula", "Error",
                                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -71,18 +71,12 @@ namespace SistemaCrud.Presentacion.Mantenimiento.Persona.Acciones
                     return;
                 }
                 // Validar que la cédula sea numérica
-                if (!long.TryParse(_persona.Persona_id.Trim(), out _))
-                {
-                    MessageBox.Show("La cédula debe ser un valor numérico", "Error",
-                                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    textBoxCedula.Focus();
-                    return;
-                }
+                // (No es necesario TryParse porque Persona_id ya es int)
                 // Obtener el tipo de persona seleccionado
                 _persona.Tipo_persona_id = (int)comboBoxTipoPersona.SelectedValue;
                 // Verificar si ya existe una persona con esta cédula
                 bool existeCedula = _db.ExecuteScalar<int>("Persona", "ExistsById",
-                                        new { Id = _persona.Persona_id.Trim() }) > 0;
+                                        new { Id = _persona.Persona_id }) > 0;
                 if (existeCedula)
                 {
                     MessageBox.Show("Ya existe una persona con esta cédula", "Error",
@@ -101,7 +95,7 @@ namespace SistemaCrud.Presentacion.Mantenimiento.Persona.Acciones
                 // Insertar en la base de datos usando la cédula como ID
                 _db.Execute("Persona", "Insert", new
                 {
-                    Id = _persona.Persona_id.Trim(),
+                    Id = _persona.Persona_id,
                     Nombre = _persona.Persona_no.Trim(),
                     TipoPersonaId = _persona.Tipo_persona_id
                 });

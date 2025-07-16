@@ -85,12 +85,24 @@ namespace SistemaCrud.Presentacion.Mantenimiento.Seccion
             dataGridViewmateria.Columns["Editar"].Width = 60;
         }
 
-        private void LoadSecciones()
+        private void LoadSecciones(string searchTerm = null)
         {
             try
             {
                 dataGridViewmateria.DataSource = null;
-                var secciones = _db.Query<dynamic>("Seccion", "GetAll");
+                IEnumerable<dynamic> secciones;
+                if (string.IsNullOrWhiteSpace(searchTerm))
+                {
+                    secciones = _db.Query<dynamic>("Seccion", "GetAll");
+                }
+                else
+                {
+                    var resultados = _db.Query<dynamic>("Seccion", "Search", new { SearchTerm = $"%{searchTerm}%" });
+                    secciones = resultados.Select(s => new {
+                        seccion_id = s.seccion_id ?? s.Codigo ?? "",
+                        seccion_de = s.seccion_de ?? s.Seccion ?? ""
+                    });
+                }
                 dataGridViewmateria.DataSource = secciones.ToList();
                 dataGridViewmateria.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
             }
@@ -127,7 +139,7 @@ namespace SistemaCrud.Presentacion.Mantenimiento.Seccion
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-
+            LoadSecciones(textBox1.Text.Trim());
         }
     }
 }
