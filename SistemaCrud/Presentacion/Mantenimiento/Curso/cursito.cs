@@ -124,7 +124,10 @@ namespace SistemaCrud.Presentacion.Mantenimiento.Curso
         private void buttonAgregar_Click(object sender, EventArgs e)
         {
             AgregarCurso form = new AgregarCurso();
-            form.Show();
+            if (form.ShowDialog() == DialogResult.OK)
+            {
+                LoadCursos();
+            }
         }
 
         private void dataGridViewmateria_CellContentClick(object sender, DataGridViewCellEventArgs e)

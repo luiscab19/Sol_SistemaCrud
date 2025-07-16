@@ -37,7 +37,7 @@
     "Update": "UPDATE seccion SET seccion_de = @Nombre WHERE seccion_id = @Id"
   },
   "Persona": {
-    "Insert": "INSERT INTO persona (persona_no, tipo_persona_id) VALUES (@Nombre, @TipoPersonaId) RETURNING persona_id",
+    "Insert": "INSERT INTO persona (persona_id, persona_no, tipo_persona_id) VALUES (@Id, @Nombre, @TipoPersonaId)",
     "ExistsByName": "SELECT COUNT(1) FROM persona WHERE persona_no = @Nombre",
     "SelectAll": "SELECT p.persona_id, p.persona_no, tp.tipo_persona_de FROM persona p INNER JOIN tipo_persona tp ON p.tipo_persona_id = tp.tipo_persona_id ORDER BY p.persona_no",
     "Search": "SELECT p.persona_id, p.persona_no, tp.tipo_persona_de FROM persona p INNER JOIN tipo_persona tp ON p.tipo_persona_id = tp.tipo_persona_id WHERE LOWER(p.persona_no) LIKE LOWER(@SearchTerm) OR CAST(p.persona_id AS TEXT) LIKE @SearchTerm OR LOWER(tp.tipo_persona_de) LIKE LOWER(@SearchTerm) ORDER BY p.persona_no",
